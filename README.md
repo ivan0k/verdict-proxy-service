@@ -8,7 +8,7 @@
 
 ## 🚀 Швидкий запуск на прод-сервері (за 1 хвилину)
 
-Підключіться по SSH до вашого Linux-сервера (де встановлено Docker та Docker Compose) і виконайте:
+Підключіться по SSH до вашого Linux-сервера (на Ubuntu 24.04 за потреби встановіть плагін Compose v2: `apt update && apt install -y docker.io docker-compose-v2`) і виконайте:
 
 ```bash
 git clone https://github.com/ivan0k/verdict-proxy-service.git
