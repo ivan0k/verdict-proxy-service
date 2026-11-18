@@ -1,0 +1,27 @@
+services:
+  verdict-proxy-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: verdict-proxy-service
+    restart: unless-stopped
+    init: true
+    # network_mode: host на Linux-сервері гарантує, що 3proxy завжди бачить реальний IP клієнта
+    # (185.112.41.130), а не внутрішній Docker bridge IP (172.x.x.1) після NAT.
+    network_mode: host
+    environment:
+      PROXY_PORT: ${PROXY_PORT:-8888}
+      PROXY_BIND_IP: ${PROXY_BIND_IP:-0.0.0.0}
+      OUTGOING_IP: ${OUTGOING_IP:-}
+      ALLOWED_IPS: ${ALLOWED_IPS-185.112.41.130}
+      ALLOWED_TARGET_PORTS: ${ALLOWED_TARGET_PORTS:-}
+      ANONYMOUS_MODE: ${ANONYMOUS_MODE:-false}
+      BLOCK_LOCALHOST: ${BLOCK_LOCALHOST:-true}
+      MAX_CONN: ${MAX_CONN:-2000}
+      DNS_SERVERS: ${DNS_SERVERS:-1.1.1.1,8.8.8.8}
+      ENABLE_LOGS: ${ENABLE_LOGS:-true}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
